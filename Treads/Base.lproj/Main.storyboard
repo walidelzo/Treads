@@ -292,6 +292,9 @@
                                             <constraint firstAttribute="width" constant="50" id="sCV-Op-BcP"/>
                                         </constraints>
                                         <state key="normal" image="pauseButton"/>
+                                        <connections>
+                                            <action selector="pauseBTNPressed:" destination="4Mi-NA-l3D" eventType="touchUpInside" id="kLw-wZ-GYJ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -335,6 +338,9 @@
                         <viewLayoutGuide key="safeArea" id="u8o-PT-Hgh"/>
                     </view>
                     <connections>
+                        <outlet property="distanceLBL" destination="3pz-2P-PYF" id="1te-Yu-ghM"/>
+                        <outlet property="durationLBL" destination="Bqj-cx-a8l" id="hCI-qc-7e3"/>
+                        <outlet property="paceLBL" destination="qRV-ee-qX5" id="rxg-nz-8zF"/>
                         <outlet property="puseBtn" destination="0bn-0e-1qc" id="vbR-tp-3dO"/>
                         <outlet property="slidBgImage" destination="QAw-bF-T2b" id="3SJ-cR-WLR"/>
                         <outlet property="sliderImage" destination="J1M-8y-gHp" id="HiZ-Ou-OZE"/>

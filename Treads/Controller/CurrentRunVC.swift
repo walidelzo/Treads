@@ -7,11 +7,18 @@
 //
 
 import UIKit
-
-class CurrentRunVC: UIViewController {
+import MapKit
+class CurrentRunVC: LocationVC {
     @IBOutlet weak var slidBgImage: UIImageView!
     @IBOutlet weak var sliderImage: UIImageView!
     @IBOutlet weak var puseBtn: UIButton!
+    @IBOutlet weak var durationLBL: UILabel!
+    @IBOutlet weak var distanceLBL: UILabel!
+    @IBOutlet weak var paceLBL: UILabel!
+    
+    var startLocation:CLLocation!
+    var endLocation:CLLocation!
+    var distance = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +35,22 @@ class CurrentRunVC: UIViewController {
         swipGestLeft.direction = .left
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+       manager?.delegate = self
+        manager?.distanceFilter = 10
+        startRun()
+        
+    }
+    
+    func startRun(){
+        manager?.startUpdatingLocation()
+    }
+    func endRun(){
+        manager?.stopUpdatingLocation()
+    }
+    @IBAction func pauseBTNPressed(_ sender: Any) {
+    }
+    
     @objc func endRun(_ sender : UISwipeGestureRecognizer ){
        // let maxAdjust :CGFloat = 159
         let minAdjust :CGFloat = 82
@@ -35,7 +58,7 @@ class CurrentRunVC: UIViewController {
 
                 if sender.direction == UISwipeGestureRecognizer.Direction.right
                 {
-                    UIView.animate(withDuration: 0.5) {
+                    UIView.animate(withDuration: 0.2) {
                         sliderView.center.x = self.puseBtn.center.x + sliderView.bounds.width + 19
                         print(self.puseBtn.center.x)
                         ////code is here
@@ -51,5 +74,21 @@ class CurrentRunVC: UIViewController {
         }
     }
     
-
+extension CurrentRunVC:CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            checkLocationAuthStatus()
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if startLocation == nil {
+            startLocation = locations.first
+        } else if let location = locations.last {
+            distance += endLocation.distance(from:location )
+            distanceLBL.text = "\(distance)"
+        }
+        endLocation = locations.last
+    }
+    
+}
 
