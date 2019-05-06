@@ -67,7 +67,7 @@ class CurrentRunVC: LocationVC {
                 } else  if sender.direction == UISwipeGestureRecognizer.Direction.left
                     {
                             UIView.animate(withDuration: 0.2) {
-                                sliderView.center.x = minAdjust
+                               sliderView.center.x = minAdjust
                     }
                 }
             }
@@ -85,7 +85,7 @@ extension CurrentRunVC:CLLocationManagerDelegate{
             startLocation = locations.first
         } else if let location = locations.last {
             distance += endLocation.distance(from:location )
-            distanceLBL.text = "\(distance)"
+            distanceLBL.text = "\(distance.metersToMiles(places: 2))"
         }
         endLocation = locations.last
     }

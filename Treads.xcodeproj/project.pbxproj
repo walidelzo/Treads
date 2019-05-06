@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		842562B9227DEEF300A1BB20 /* LocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842562B8227DEEF300A1BB20 /* LocationVC.swift */; };
 		842562BB227E390C00A1BB20 /* CurrentRunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842562BA227E390C00A1BB20 /* CurrentRunVC.swift */; };
+		843D35D2227F5A3400425439 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843D35D1227F5A3400425439 /* Extentions.swift */; };
 		8441A74C227985F500EEE916 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A74B227985F500EEE916 /* AppDelegate.swift */; };
 		8441A74E227985F500EEE916 /* BeginRunVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A74D227985F500EEE916 /* BeginRunVC.swift */; };
 		8441A750227985F500EEE916 /* RunLogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441A74F227985F500EEE916 /* RunLogVC.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		842562B8227DEEF300A1BB20 /* LocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationVC.swift; sourceTree = "<group>"; };
 		842562BA227E390C00A1BB20 /* CurrentRunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentRunVC.swift; sourceTree = "<group>"; };
+		843D35D1227F5A3400425439 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		8441A748227985F500EEE916 /* Treads.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Treads.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8441A74B227985F500EEE916 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8441A74D227985F500EEE916 /* BeginRunVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginRunVC.swift; sourceTree = "<group>"; };
@@ -77,6 +79,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		843D35D0227F5A0C00425439 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				843D35D1227F5A3400425439 /* Extentions.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
 		8441A73F227985F500EEE916 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +106,7 @@
 		8441A74A227985F500EEE916 /* Treads */ = {
 			isa = PBXGroup;
 			children = (
+				843D35D0227F5A0C00425439 /* Extentions */,
 				8441A7622279C3D900EEE916 /* Resources */,
 				8441A7612279C3CE00EEE916 /* Controller */,
 				8441A7602279C3C700EEE916 /* View */,
@@ -250,6 +261,7 @@
 			files = (
 				842562BB227E390C00A1BB20 /* CurrentRunVC.swift in Sources */,
 				8441A750227985F500EEE916 /* RunLogVC.swift in Sources */,
+				843D35D2227F5A3400425439 /* Extentions.swift in Sources */,
 				842562B9227DEEF300A1BB20 /* LocationVC.swift in Sources */,
 				8441A74C227985F500EEE916 /* AppDelegate.swift in Sources */,
 				8441A74E227985F500EEE916 /* BeginRunVC.swift in Sources */,
