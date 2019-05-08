@@ -19,6 +19,9 @@ class CurrentRunVC: LocationVC {
     var startLocation:CLLocation!
     var endLocation:CLLocation!
     var distance = 0.0
+    var timer = Timer()
+    var counter = 0
+    var pace = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +39,7 @@ class CurrentRunVC: LocationVC {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-       manager?.delegate = self
+        manager?.delegate = self
         manager?.distanceFilter = 10
         startRun()
         
@@ -44,36 +47,48 @@ class CurrentRunVC: LocationVC {
     
     func startRun(){
         manager?.startUpdatingLocation()
+        startTimer()
+        
     }
     func endRun(){
         manager?.stopUpdatingLocation()
     }
+    
+    func startTimer(){
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(counterFunction), userInfo: nil, repeats: true)
+    }
+    @objc func counterFunction(){
+        counter += 1
+        durationLBL.text = "\(counter.formatTimeToString())"
+    }
+    
+    func calculatePace(time second:Int , miles :Double )-> String
+    {
+        pace = Int(Double(second) / miles)
+        return pace.formatTimeToString()
+    }
+    
     @IBAction func pauseBTNPressed(_ sender: Any) {
+        
     }
     
     @objc func endRun(_ sender : UISwipeGestureRecognizer ){
-       // let maxAdjust :CGFloat = 159
-        let minAdjust :CGFloat = 82
         if let sliderView = sender.view {
-
-                if sender.direction == UISwipeGestureRecognizer.Direction.right
-                {
-                    UIView.animate(withDuration: 0.2) {
-                        sliderView.center.x = self.puseBtn.center.x + sliderView.bounds.width + 19
-                        print(self.puseBtn.center.x)
-                        ////code is here
-                       // self.dismiss(animated: true, completion: nil)
-                    }
-                } else  if sender.direction == UISwipeGestureRecognizer.Direction.left
-                    {
-                            UIView.animate(withDuration: 0.2) {
-                               sliderView.center.x = minAdjust
-                    }
+            
+            if sender.direction == UISwipeGestureRecognizer.Direction.right
+            {
+                UIView.animate(withDuration: 0.5) {
+                    sliderView.center.x = self.puseBtn.center.x + sliderView.bounds.width + 19
+                    print(self.puseBtn.center.x)
+                    ////code is here
+                    
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         }
     }
-    
+}
+
 extension CurrentRunVC:CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
@@ -86,6 +101,10 @@ extension CurrentRunVC:CLLocationManagerDelegate{
         } else if let location = locations.last {
             distance += endLocation.distance(from:location )
             distanceLBL.text = "\(distance.metersToMiles(places: 2))"
+            if distance > 0 && counter > 0
+            {
+                paceLBL.text = calculatePace(time: counter, miles: distance.metersToMiles(places: 2))
+            }
         }
         endLocation = locations.last
     }
