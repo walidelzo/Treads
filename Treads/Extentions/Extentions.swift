@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 extension Double{
     
     func metersToMiles(places:Int)->Double{
@@ -35,3 +36,16 @@ extension Int{
         
     }
 }
+
+extension NSDate{
+    func StringFromDate()->String{
+        
+        let calender = Calendar.current
+        let month = calender.component(.month, from: self as Date)
+        let day = calender.component(.day, from: self as Date)
+        let year = calender.component(.year, from: self as Date)
+        return "\(day)/\(month)/\(year)"
+        
+    }
+}
+

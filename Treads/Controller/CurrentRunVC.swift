@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 class CurrentRunVC: LocationVC {
+    
     @IBOutlet weak var slidBgImage: UIImageView!
     @IBOutlet weak var sliderImage: UIImageView!
     @IBOutlet weak var puseBtn: UIButton!
@@ -31,11 +32,16 @@ class CurrentRunVC: LocationVC {
         swipGestRight.delegate = self as? UIGestureRecognizerDelegate
         swipGestRight.direction = .right
         
+        
         let swipGestLeft = UISwipeGestureRecognizer(target: self, action: #selector(endRun(_:)))
         sliderImage.isUserInteractionEnabled = true
         sliderImage.addGestureRecognizer(swipGestLeft)
         swipGestLeft.delegate = self as? UIGestureRecognizerDelegate
         swipGestLeft.direction = .left
+        
+        sliderImage.center.x = slidBgImage.center.x - (sliderImage.frame.width + 6)
+        sliderImage.center.y = slidBgImage.center.y
+        print(slidBgImage.center.y)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,10 +54,18 @@ class CurrentRunVC: LocationVC {
     func startRun(){
         manager?.startUpdatingLocation()
         startTimer()
+        puseBtn.setImage(#imageLiteral(resourceName: "pauseButton"), for: .normal)
         
     }
+    func pauseRun(){
+        manager?.stopUpdatingLocation()
+        timer.invalidate()
+        puseBtn.setImage(#imageLiteral(resourceName: "resumeButton"), for: .normal)
+    }
+    
     func endRun(){
         manager?.stopUpdatingLocation()
+        Run.addedRunToRealm(distace: distance, pace: pace, duration: counter)
     }
     
     func startTimer(){
@@ -64,12 +78,17 @@ class CurrentRunVC: LocationVC {
     
     func calculatePace(time second:Int , miles :Double )-> String
     {
-        pace = Int(Double(second) / miles)
+         pace = Int(Double(second) / miles) 
         return pace.formatTimeToString()
     }
     
     @IBAction func pauseBTNPressed(_ sender: Any) {
-        
+        if timer.isValid {
+            pauseRun()
+
+        }else{
+            startRun()
+        }
     }
     
     @objc func endRun(_ sender : UISwipeGestureRecognizer ){
@@ -77,13 +96,12 @@ class CurrentRunVC: LocationVC {
             
             if sender.direction == UISwipeGestureRecognizer.Direction.right
             {
-                UIView.animate(withDuration: 0.5) {
-                    sliderView.center.x = self.puseBtn.center.x + sliderView.bounds.width + 19
-                    print(self.puseBtn.center.x)
+                UIView.animate(withDuration:2.0 ) {
+                    sliderView.center.x = self.puseBtn.center.x
                     ////code is here
-                    
-                    self.dismiss(animated: true, completion: nil)
+                    self.endRun()
                 }
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
