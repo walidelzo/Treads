@@ -107,9 +107,10 @@ class BeginRunVC: LocationVC {
             coordinate2d.append(CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
             
         }
+        guard  let locations = Run.getRunByID(forID: lastRun.id)?.locations else {return MKPolyline()}
         mapView.userTrackingMode = .none
-        mapView.setRegion(centerMapViewToPrevRoute(locations: lastRun.locations), animated: true)
-        return MKPolyline(coordinates: coordinate2d, count: lastRun.locations.count)
+        mapView.setRegion(centerMapViewToPrevRoute(locations: locations), animated: true)
+        return MKPolyline(coordinates: coordinate2d, count: locations.count)
     }
     
    
