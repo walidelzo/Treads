@@ -49,7 +49,7 @@ class Run:Object {
             let run = Run(distance: distace, pace: pace, durtion: duration,locations: locations)
             do
             {
-                let realm = try Realm()
+                let realm = try Realm(configuration: realmConfig.runDataconfig)
                 try realm.write {
                     realm.add(run)
                     print("data saved to Realm...")
@@ -65,9 +65,9 @@ class Run:Object {
     
     static func getAllRuns() -> Results<Run>?{
         do {
-            let realm = try Realm()
-            let runs = realm.objects(Run.self)
-            print(realm.configuration.fileURL!)
+            let realm = try Realm(configuration: realmConfig.runDataconfig)
+            let runs = realm.objects(Run.self).sorted(byKeyPath: "date", ascending: false)
+           // print(realm.configuration.fileURL!)
             return runs
         } catch{
             return nil
