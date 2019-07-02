@@ -36,6 +36,7 @@
 		8441A7852279C4C800EEE916 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8441A7732279C4C800EEE916 /* Montserrat-Medium.ttf */; };
 		8441A7862279C4C800EEE916 /* Montserrat-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8441A7742279C4C800EEE916 /* Montserrat-ExtraLight.ttf */; };
 		844D01E522A44D2D005C9E60 /* runLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D01E422A44D2D005C9E60 /* runLog.swift */; };
+		8497659622CB698B00802086 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8497659522CB698B00802086 /* Location.swift */; };
 		84D2B8FB229339A600ED41E2 /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D2B8FA229339A600ED41E2 /* Run.swift */; };
 		C6F3AB18021FB574E23F588C /* Pods_Treads.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1587002E2B32A4EE28A3F3A /* Pods_Treads.framework */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,7 @@
 		8441A7732279C4C800EEE916 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		8441A7742279C4C800EEE916 /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
 		844D01E422A44D2D005C9E60 /* runLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = runLog.swift; sourceTree = "<group>"; };
+		8497659522CB698B00802086 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		84D2B8FA229339A600ED41E2 /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		F1587002E2B32A4EE28A3F3A /* Pods_Treads.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Treads.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B0B6AA25E2A2F3FAE865B5 /* Pods-Treads.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Treads.release.xcconfig"; path = "Target Support Files/Pods-Treads/Pods-Treads.release.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				84D2B8FA229339A600ED41E2 /* Run.swift */,
+				8497659522CB698B00802086 /* Location.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 			files = (
 				842562BB227E390C00A1BB20 /* CurrentRunVC.swift in Sources */,
 				8441A750227985F500EEE916 /* RunLogVC.swift in Sources */,
+				8497659622CB698B00802086 /* Location.swift in Sources */,
 				843D35D2227F5A3400425439 /* Extentions.swift in Sources */,
 				842562B9227DEEF300A1BB20 /* LocationVC.swift in Sources */,
 				8441A74C227985F500EEE916 /* AppDelegate.swift in Sources */,

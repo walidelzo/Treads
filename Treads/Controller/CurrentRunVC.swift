@@ -5,9 +5,9 @@
 //  Created by Admin on 5/4/19.
 //  Copyright © 2019 NanoSoft. All rights reserved.
 //
-
 import UIKit
 import MapKit
+import RealmSwift
 class CurrentRunVC: LocationVC {
     
     @IBOutlet weak var slidBgImage: UIImageView!
@@ -17,12 +17,13 @@ class CurrentRunVC: LocationVC {
     @IBOutlet weak var distanceLBL: UILabel!
     @IBOutlet weak var paceLBL: UILabel!
     
-    var startLocation:CLLocation!
-    var endLocation:CLLocation!
-    var distance = 0.0
-    var timer = Timer()
-    var counter = 0
-    var pace = 0
+   fileprivate var startLocation:CLLocation!
+   fileprivate var endLocation:CLLocation!
+   fileprivate var distance = 0.0
+   fileprivate var timer = Timer()
+   fileprivate var counter = 0
+   fileprivate var pace = 0
+   fileprivate var coordonateLocations = List<Location>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +66,7 @@ class CurrentRunVC: LocationVC {
     
     func endRun(){
         manager?.stopUpdatingLocation()
-        Run.addedRunToRealm(distace: distance, pace: pace, duration: counter)
+        Run.addedRunToRealm(distace: distance, pace: pace, duration: counter, locations: coordonateLocations)
     }
     
     func startTimer(){
@@ -78,7 +79,7 @@ class CurrentRunVC: LocationVC {
     
     func calculatePace(time second:Int , miles :Double )-> String
     {
-         pace = Int(Double(second) / miles) 
+         pace = Int(Double(second) / miles)
         return pace.formatTimeToString()
     }
     
@@ -119,6 +120,8 @@ extension CurrentRunVC:CLLocationManagerDelegate{
         } else if let location = locations.last {
             distance += endLocation.distance(from:location )
             distanceLBL.text = "\(distance.metersToMiles(places: 2))"
+            let newLocation = Location(latitude: Double(endLocation.coordinate.latitude), longitude: Double(endLocation.coordinate.longitude))
+            self.coordonateLocations.insert(newLocation, at: 0)
             if distance > 0 && counter > 0
             {
                 paceLBL.text = calculatePace(time: counter, miles: distance.metersToMiles(places: 2))

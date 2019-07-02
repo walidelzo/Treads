@@ -16,6 +16,7 @@ class Run:Object {
     @objc dynamic  var distance = 0.0
     @objc dynamic  var duration = 0
     @objc dynamic  var date = NSDate()
+    public private(set) var locations = List<Location>()
     
     override class func primaryKey()->String
         
@@ -29,7 +30,7 @@ class Run:Object {
 //
 //    }
     
-    convenience init(distance:Double , pace:Int , durtion:Int)
+    convenience init(distance:Double , pace:Int , durtion:Int,locations:List<Location>)
     {
         self.init()
         self.id = UUID().uuidString.lowercased()
@@ -37,14 +38,15 @@ class Run:Object {
         self.distance = distance
         self.duration = durtion
         self.date = NSDate()
+        self.locations = locations
         
     }
     
-    static func addedRunToRealm(distace:Double, pace:Int, duration:Int){
+    static func addedRunToRealm(distace:Double, pace:Int, duration:Int,locations:List<Location>){
         
         REALM_QUEUE.async {
             
-            let run = Run(distance: distace, pace: pace, durtion: duration)
+            let run = Run(distance: distace, pace: pace, durtion: duration,locations: locations)
             do
             {
                 let realm = try Realm()
@@ -65,7 +67,7 @@ class Run:Object {
         do {
             let realm = try Realm()
             let runs = realm.objects(Run.self)
-           // print(realm.configuration.fileURL!)
+            print(realm.configuration.fileURL!)
             return runs
         } catch{
             return nil
