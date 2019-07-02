@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import RealmSwift
 class BeginRunVC: LocationVC {
     //Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -21,32 +22,58 @@ class BeginRunVC: LocationVC {
     //Actions
     @IBAction func closeBtnView(_ sender: Any) {
         self.LastRubView.isHidden = true
+        centerMapView()
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationAuthStatus()
-        print("this is all runs\(String(describing: Run.getAllRuns()))")
-        getLastRun()
+        //print("this is all runs\(String(describing: Run.getAllRuns()))")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        manager?.startUpdatingLocation()
         manager?.delegate = self
         mapView.delegate = self
-
-        
+        manager?.startUpdatingLocation()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         manager?.stopUpdatingLocation()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         mapViewSetup()
-
+    }
+    
+    func centerMapView(){
+        mapView.userTrackingMode = .follow
+        let coordinateRegion = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
 
     @IBAction func centerLocationBtn(_ sender: Any) {
+        centerMapView()
+    }
+    
+    
+    // center mapview to previous route
+    
+    func centerMapViewToPrevRoute(locations:List<Location>)->MKCoordinateRegion{
+        guard let initLocation = locations.first else {return MKCoordinateRegion()}
+        var minlit = initLocation.latitude
+        var minlong = initLocation.longitude
+        var maxlit = minlit
+        var maxlong = minlong
+       
+        for location in locations{
+            minlit  = min(minlit  ,location.latitude)
+            minlong = min(minlong ,location.longitude)
+            maxlit  = max(maxlit ,location.latitude)
+            maxlong = max(maxlong ,location.longitude)
+        }
+     
+        return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: (minlit + maxlit)/2, longitude: (minlong + maxlong)/2), span: MKCoordinateSpan(latitudeDelta:(maxlit - minlit)*1.4 , longitudeDelta: (maxlong - minlong)*1.4))
         
     }
     
@@ -60,6 +87,7 @@ class BeginRunVC: LocationVC {
 
         }else{
             LastRubView.isHidden = true
+            centerMapView()
 
         }
     }
@@ -79,13 +107,12 @@ class BeginRunVC: LocationVC {
             coordinate2d.append(CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
             
         }
+        mapView.userTrackingMode = .none
+        mapView.setRegion(centerMapViewToPrevRoute(locations: lastRun.locations), animated: true)
         return MKPolyline(coordinates: coordinate2d, count: lastRun.locations.count)
     }
     
-    func getLastRun(){
-        
-        
-     }
+   
     
     
 }
@@ -95,7 +122,6 @@ extension BeginRunVC : CLLocationManagerDelegate{
         if status  == .authorizedWhenInUse{
          checkLocationAuthStatus()
          mapView.showsUserLocation = true
-         mapView.userTrackingMode = .follow
         }
     }
     
